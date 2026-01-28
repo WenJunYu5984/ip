@@ -14,30 +14,30 @@ public class Lukas {
 
         Scanner message = new Scanner(System.in);
 
-        while (true){
+        while (true) {
             String input = message.nextLine();
             System.out.println(line);
 
-            if(input.equals("bye")){
+            if (input.equals("bye")) {
                 System.out.println("    Bye! See you later, alligator!");
                 System.out.println(line);
                 break;
-            } else if(input.equals("list")){
+            } else if (input.equals("list")) {
                 System.out.println("    This is your list of tasks:");
-                for (int i = 0; i < listCount; i ++){
-                    System.out.println("    " + (i+1) + ". " + list[i].getTaskDetails());
+                for (int i = 0; i < listCount; i++) {
+                    System.out.println("    " + (i + 1) + ". " + list[i].getTaskDetails());
                 }
-            }else if (input.startsWith("mark ")) {
+            } else if (input.startsWith("mark ")) {
                 int taskNumber = Integer.parseInt(input.substring(5)) - 1;
                 list[taskNumber].markAsDone();
                 System.out.println("    Good Job on completing this task! This task is now marked as done:");
                 System.out.println("    " + list[taskNumber].getTaskDetails());
-            } else if (input.startsWith("unmark ")){
+            } else if (input.startsWith("unmark ")) {
                 int taskNumber = Integer.parseInt(input.substring(7)) - 1;
                 list[taskNumber].unmarkAsDone();
                 System.out.println("    Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
                 System.out.println("    " + list[taskNumber].getTaskDetails());
-            } else{
+            } else {
                 list[listCount] = new Task(input);
                 listCount++;
                 System.out.println("    added:" + input);
