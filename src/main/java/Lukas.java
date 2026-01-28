@@ -4,8 +4,8 @@ public class Lukas {
     public static void main(String[] args) {
         String line = "    _________________________________________";
 
-        //String[] list = new String[100];
-        //int listCount = 0;
+        String[] list = new String[100];
+        int listCount = 0;
 
         System.out.println(line);
         System.out.println("    Hello I'm Lukas\n");
@@ -22,7 +22,7 @@ public class Lukas {
                 System.out.println("    Bye! See you later, alligator!");
                 System.out.println(line);
                 break;
-            }/* else if(input.equals("list")){
+            } else if(input.equals("list")){
                 for (int i = 0; i < listCount; i ++){
                     System.out.println("    " + (i+1) + ". " + list[i]);
                 }
@@ -32,10 +32,6 @@ public class Lukas {
                 System.out.println("    added:" + input);
             }
 
-            System.out.println(line);*/
-
-            System.out.println("    " + input);
-            System.out.println("    Hey! That's not a valid command! Try again.");
             System.out.println(line);
         }
 
