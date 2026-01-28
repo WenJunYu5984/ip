@@ -4,7 +4,7 @@ public class Lukas {
     public static void main(String[] args) {
         String line = "    _________________________________________";
 
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int listCount = 0;
 
         System.out.println(line);
@@ -23,11 +23,22 @@ public class Lukas {
                 System.out.println(line);
                 break;
             } else if(input.equals("list")){
+                System.out.println("    This is your list of tasks:");
                 for (int i = 0; i < listCount; i ++){
-                    System.out.println("    " + (i+1) + ". " + list[i]);
+                    System.out.println("    " + (i+1) + ". " + list[i].getTaskDetails());
                 }
+            }else if (input.startsWith("mark ")) {
+                int taskNumber = Integer.parseInt(input.substring(5)) - 1;
+                list[taskNumber].markAsDone();
+                System.out.println("    Good Job on completing this task! This task is now marked as done:");
+                System.out.println("    " + list[taskNumber].getTaskDetails());
+            } else if (input.startsWith("unmark ")){
+                int taskNumber = Integer.parseInt(input.substring(7)) - 1;
+                list[taskNumber].unmarkAsDone();
+                System.out.println("    Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
+                System.out.println("    " + list[taskNumber].getTaskDetails());
             } else{
-                list[listCount] = input;
+                list[listCount] = new Task(input);
                 listCount++;
                 System.out.println("    added:" + input);
             }
