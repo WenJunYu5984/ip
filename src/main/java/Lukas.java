@@ -1,51 +1,61 @@
 import java.util.Scanner;
 
 public class Lukas {
-    public static void main(String[] args) {
-        String line = "    _________________________________________";
+        private static final Task[] list = new Task[100];
+        private static int listCount = 0;
 
-        Task[] list = new Task[100];
-        int listCount = 0;
+        public static void main (String[]args){
+            Ui.showWelcome();
+            Scanner message = new Scanner(System.in);
 
-        System.out.println(line);
-        System.out.println("    Hello I'm Lukas\n");
-        System.out.println("    What can I do for you?");
-        System.out.println(line);
+            while (true) {
+                String input = message.nextLine();
+                Ui.showLine();
 
-        Scanner message = new Scanner(System.in);
-
-        while (true) {
-            String input = message.nextLine();
-            System.out.println(line);
-
-            if (input.equals("bye")) {
-                System.out.println("    Bye! See you later, alligator!");
-                System.out.println(line);
-                break;
-            } else if (input.equals("list")) {
-                System.out.println("    This is your list of tasks:");
-                for (int i = 0; i < listCount; i++) {
-                    System.out.println("    " + (i + 1) + ". " + list[i].getTaskDetails());
+                if (input.equals("bye")) {
+                    Ui.showGoodbye();
+                    break;
+                } else if (input.equals("list")) {
+                    Ui.showList(list, listCount);
+                } else if (input.startsWith("mark ")) {
+                    handleMark(input, true);
+                } else if (input.startsWith("unmark ")) {
+                    handleMark(input, false);
+                } else if (input.startsWith("todo ")) {
+                    addTask(new Todo(input.substring(5)));
+                } else if (input.startsWith("deadline ")) {
+                    String[] parts = input.substring(9).split(" /by ");
+                    addTask(new Deadline(parts[0], parts[1]));
+                } else if (input.startsWith("event ")) {
+                    String[] parts = input.substring(6).split(" /from ");
+                    String[] timeParts = parts[1].split(" /to ");
+                    addTask(new Event(parts[0], timeParts[0], timeParts[1]));
+                } else {
+                    list[listCount] = new Task(input);
+                    listCount++;
+                    System.out.println("    added:" + input);
                 }
-            } else if (input.startsWith("mark ")) {
-                int taskNumber = Integer.parseInt(input.substring(5)) - 1;
-                list[taskNumber].markAsDone();
-                System.out.println("    Good Job on completing this task! This task is now marked as done:");
-                System.out.println("    " + list[taskNumber].getTaskDetails());
-            } else if (input.startsWith("unmark ")) {
-                int taskNumber = Integer.parseInt(input.substring(7)) - 1;
-                list[taskNumber].unmarkAsDone();
-                System.out.println("    Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
-                System.out.println("    " + list[taskNumber].getTaskDetails());
-            } else {
-                list[listCount] = new Task(input);
-                listCount++;
-                System.out.println("    added:" + input);
+
+                Ui.showLine();
             }
 
-            System.out.println(line);
+            message.close();
         }
 
-        message.close();
+        private static void addTask (Task task){
+            list[listCount++] = task;
+            Ui.showAdded(task, listCount);
+        }
+
+        private static void handleMark (String input,boolean isMark){
+            int idx = Integer.parseInt(input.split(" ")[1]) - 1;
+            if (isMark) {
+                list[idx].markAsDone();
+                System.out.println("    Good Job on completing the task! Task is now marked as done:");
+            } else {
+                list[idx].unmarkAsDone();
+                System.out.println("    Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
+            }
+            System.out.println("    " + list[idx]);
+        }
     }
-}
