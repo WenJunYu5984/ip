@@ -1,3 +1,5 @@
+package lukas.task;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -7,7 +9,6 @@ public class Task {
         this.isDone = false;
     }
 
-    //Update status of task, Cross if mark, Empty otherwise
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
