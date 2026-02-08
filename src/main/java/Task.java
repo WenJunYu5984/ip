@@ -7,7 +7,6 @@ public class Task {
         this.isDone = false;
     }
 
-    //Update status of task, Cross if mark, Empty otherwise
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
