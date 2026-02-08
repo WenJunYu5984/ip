@@ -8,14 +8,14 @@ import lukas.ui.Ui;
 
 public class Lukas {
     private static final int MAX_NUMBER = 100;
-    private static final Task[] list = new Task[100];
+    private static final Task[] list = new Task[MAX_NUMBER];
     private static int listCount = 0;
 
     public static void main(String[] args) {
         Ui.showWelcome();
         Scanner message = new Scanner(System.in);
 
-        while(true) {
+        while (true) {
             String input = message.nextLine().trim();
             if (input.equals("bye")) {
                 Ui.showGoodbye();
@@ -59,7 +59,6 @@ public class Lukas {
         if (input.trim().equalsIgnoreCase("event")) {
             throw new LukasException(" There must be a task when using event command.");
         } else if (input.contains(" /from ") && input.contains(" /to ")) {
-            String content = input.substring(6).trim();
             String[] parts = input.substring(6).split(" /from ", 2);
             String description = parts[0].trim();
             if (description.isEmpty()) {
@@ -122,7 +121,7 @@ public class Lukas {
                     }
 
                     Task var10001 = list[idx];
-                    System.out.println("    " + String.valueOf(var10001));
+                    System.out.println("    " + var10001);
                 } else {
                     throw new LukasException(" That task number does not exist. You have " + listCount + " tasks");
                 }
