@@ -1,3 +1,7 @@
+package lukas.ui;
+
+import lukas.task.Task;
+
 public class Ui {
     private static final String LINE = "    _________________________________________";
 
