@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import lukas.storage.Storage;
 import lukas.task.Deadline;
 import lukas.task.Event;
 import lukas.task.Task;
@@ -10,8 +11,12 @@ public class Lukas {
     private static final int MAX_NUMBER = 100;
     private static final Task[] list = new Task[MAX_NUMBER];
     private static int listCount = 0;
+    private static Storage storage; // Added storage field
 
     public static void main(String[] args) {
+        // Initialize storage and load existing tasks
+        storage = new Storage("./data/lukas.txt");
+        listCount = storage.loadTasks(list);
         Ui.showWelcome();
         Scanner message = new Scanner(System.in);
 
@@ -101,6 +106,7 @@ public class Lukas {
     private static void addTask(Task task) {
         list[listCount++] = task;
         Ui.showAdded(task, listCount);
+        storage.saveTasks(list, listCount); // Save after adding
     }
 
     private static void handleMark(String input) throws LukasException {
@@ -129,5 +135,6 @@ public class Lukas {
         } catch (NumberFormatException var4) {
             throw new LukasException(" Please use a number to represent the task. For example: mark 1");
         }
+        storage.saveTasks(list, listCount); // Save after state change
     }
 }
