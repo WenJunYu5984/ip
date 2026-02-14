@@ -9,4 +9,12 @@ public class ToDo extends Task {
     public String toString() {
         return "[T]" + super.toString();
     }
+    @Override
+    public String toFileFormat() {
+        int statusAsNumber = 0;
+        if(isDone){
+            statusAsNumber = 1;
+        }
+        return "T | " + statusAsNumber + " | " + description;
+    }
 }

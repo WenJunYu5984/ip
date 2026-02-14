@@ -1,0 +1,3 @@
+T | 0 | eat cake
+D | 1 | eat fruits | tonight
+E | 1 | eat breakfast | now | 10 am

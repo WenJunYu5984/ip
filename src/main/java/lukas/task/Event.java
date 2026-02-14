@@ -14,4 +14,12 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
+    @Override
+    public String toFileFormat() {
+        int statusAsNumber = 0;
+        if(isDone){
+            statusAsNumber = 1;
+        }
+        return "E | " + statusAsNumber + " | " + description + " | " + from + " | " + to;
+    }
 }
