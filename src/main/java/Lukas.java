@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import lukas.task.Deadline;
 import lukas.task.Event;
@@ -7,9 +8,10 @@ import lukas.task.ToDo;
 import lukas.ui.Ui;
 
 public class Lukas {
-    private static final int MAX_NUMBER = 100;
-    private static final Task[] list = new Task[MAX_NUMBER];
-    private static int listCount = 0;
+    //    private static final int MAX_NUMBER = 100;
+//    private static final Task[] list = new Task[MAX_NUMBER];
+//    private static int listCount = 0;
+    private static final ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
         Ui.showWelcome();
@@ -38,9 +40,11 @@ public class Lukas {
         String command = inputParts[0].toLowerCase();
         String arguments = getArguments(inputParts);
         if (command.equals("list")) {
-            Ui.showList(list, listCount);
+            Ui.showList(taskList);
         } else if (command.equals("mark") || command.equals("unmark")) {
             handleMark(command, arguments);
+        } else if (command.equals("delete")) {
+            handleDelete(arguments);
         } else if (input.startsWith("todo")) {
             handleTodo(arguments);
         } else if (input.startsWith("deadline")) {
@@ -52,7 +56,27 @@ public class Lukas {
         }
         Ui.showLine();
     }
+    private static void handleDelete(String input) throws LukasException {
+        if (input.isEmpty()) {
+            throw new LukasException(" Which task to delete? Try: delete (number)");
+        }
 
+        try {
+            int idx = Integer.parseInt(input) - 1;
+
+            if (idx < 0 || idx >= taskList.size()) {
+                throw new LukasException(" That task number does not exist. You have " + taskList.size() + " tasks");
+            }
+
+            Task removedTask = taskList.remove(idx);
+            System.out.println(getSpaces() + "Noted. I've removed this task:");
+            System.out.println(getSpaces() + "  " + removedTask);
+            System.out.println(getSpaces() + "Now you have " + taskList.size() + " tasks in the list.");
+
+        } catch (NumberFormatException error) {
+            throw new LukasException(" Please use a number to delete. For example: delete 1");
+        }
+    }
 
     private static void handleEvent(String input) throws LukasException {
         if (input.trim().equalsIgnoreCase("event")) {
@@ -96,8 +120,8 @@ public class Lukas {
     }
 
     private static void addTask(Task task) {
-        list[listCount++] = task;
-        Ui.showAdded(task, listCount);
+        taskList.add(task);
+        Ui.showAdded(task, taskList.size());
     }
 
     private static void handleMark(String command, String input) throws LukasException {
@@ -109,19 +133,20 @@ public class Lukas {
             int idx = Integer.parseInt(input) - 1;
 
             //check bounds early
-            if (idx < 0 || idx >= listCount) {
-                throw new LukasException(" That task number does not exist. You have " + listCount + " tasks");
+            if (idx < 0 || idx >= taskList.size()) {
+                throw new LukasException(" That task number does not exist. You have " + taskList.size() + " tasks");
             }
 
+            Task t = taskList.get(idx);
             if (command.equals("mark")) {
-                list[idx].markAsDone();
+                t.markAsDone();
                 System.out.println(getSpaces() + "Good Job on completing the task! Task is now marked as done:");
             } else {
-                list[idx].unmarkAsDone();
+                t.unmarkAsDone();
                 System.out.println(getSpaces() + "Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
             }
 
-            System.out.println(getSpaces() + list[idx]);
+            System.out.println(getSpaces() + t);
         } catch (NumberFormatException error) {
             throw new LukasException(" Please use a number to represent the task. For example: " + command + "1");
         }
