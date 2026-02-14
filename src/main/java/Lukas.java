@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import lukas.storage.Storage;
 import lukas.task.Deadline;
 import lukas.task.Event;
 import lukas.task.Task;
@@ -8,10 +9,8 @@ import lukas.task.ToDo;
 import lukas.ui.Ui;
 
 public class Lukas {
-    //    private static final int MAX_NUMBER = 100;
-//    private static final Task[] list = new Task[MAX_NUMBER];
-//    private static int listCount = 0;
-    private static final ArrayList<Task> taskList = new ArrayList<>();
+    private static final Storage storage = new Storage("./data/lukas.txt"); // Added storage field
+    private static final ArrayList<Task> taskList = storage.load();
 
     public static void main(String[] args) {
         Ui.showWelcome();
@@ -69,6 +68,8 @@ public class Lukas {
             }
 
             Task removedTask = taskList.remove(idx);
+            //Sync to hard drive
+            storage.saveTasks(taskList);
             System.out.println(getSpaces() + "Noted. I've removed this task:");
             System.out.println(getSpaces() + "  " + removedTask);
             System.out.println(getSpaces() + "Now you have " + taskList.size() + " tasks in the list.");
@@ -122,6 +123,7 @@ public class Lukas {
     private static void addTask(Task task) {
         taskList.add(task);
         Ui.showAdded(task, taskList.size());
+        storage.saveTasks(taskList); // Save after adding
     }
 
     private static void handleMark(String command, String input) throws LukasException {
@@ -148,8 +150,9 @@ public class Lukas {
 
             System.out.println(getSpaces() + t);
         } catch (NumberFormatException error) {
-            throw new LukasException(" Please use a number to represent the task. For example: " + command + "1");
+            throw new LukasException(" Please use a number to represent the task. For example: " + command + " 1");
         }
+        storage.saveTasks(taskList); // Save after state change
     }
 
     private static String getSpaces() {

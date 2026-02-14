@@ -1,6 +1,6 @@
 package lukas.task;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -20,6 +20,8 @@ public class Task {
     public void unmarkAsDone() {
         this.isDone = false;
     }
+
+    public abstract String toFileFormat();
 
     @Override
     public String toString() {
