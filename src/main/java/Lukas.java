@@ -26,7 +26,7 @@ public class Lukas {
             try {
                 commandLine(input);
             } catch (LukasException error) {
-                System.out.println("    Oops!!" + error.getMessage());
+                System.out.println(getSpaces() + "Oops!!" + error.getMessage());
                 Ui.showLine();
             }
         }
@@ -34,68 +34,65 @@ public class Lukas {
 
     private static void commandLine(String input) throws LukasException {
         Ui.showLine();
-        if (input.equals("list")) {
+        String[] inputParts = input.trim().split(" ", 2);
+        String command = inputParts[0].toLowerCase();
+        String arguments = getArguments(inputParts);
+        if (command.equals("list")) {
             Ui.showList(list, listCount);
-        } else if (!input.startsWith("mark") && !input.startsWith("unmark")) {
-            if (input.startsWith("todo")) {
-                handleTodo(input);
-            } else if (input.startsWith("deadline")) {
-                handleDeadline(input);
-            } else {
-                if (!input.startsWith("event")) {
-                    throw new LukasException(" I'm sorry, but I don't know what you mean :( Try todo, deadline, or event instead.");
-                }
-
-                handleEvent(input);
-            }
+        } else if (command.equals("mark") || command.equals("unmark")) {
+            handleMark(command, arguments);
+        } else if (input.startsWith("todo")) {
+            handleTodo(arguments);
+        } else if (input.startsWith("deadline")) {
+            handleDeadline(arguments);
+        } else if (input.startsWith("event")) {
+            handleEvent(arguments);
         } else {
-            handleMark(input);
+            throw new LukasException(" I'm sorry, but I don't know what you mean :( Try todo, deadline, or event instead.");
         }
-
         Ui.showLine();
     }
+
 
     private static void handleEvent(String input) throws LukasException {
         if (input.trim().equalsIgnoreCase("event")) {
             throw new LukasException(" There must be a task when using event command.");
-        } else if (input.contains(" /from ") && input.contains(" /to ")) {
-            String[] parts = input.substring(6).split(" /from ", 2);
-            String description = parts[0].trim();
-            if (description.isEmpty()) {
-                throw new LukasException(" There must be a task when using event command. Try entering some task after typing event");
-            } else {
-                String[] timeParts = parts[1].split(" /to ", 2);
-                if (timeParts.length >= 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
-                    addTask(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
-                } else {
-                    throw new LukasException(" You missed the start or end time of the event!");
-                }
-            }
-        } else {
+        }
+        if (!input.contains(" /from ") || !input.contains(" /to ")) {
             throw new LukasException(" Format error! Use: event <task> /from <start> and /to <finish>");
         }
+        String[] parts = input.substring(6).split(" /from ", 2);
+        String description = parts[0].trim();
+        if (description.isEmpty()) {
+            throw new LukasException(" There must be a task when using event command. Try entering some task after typing event");
+        }
+        String[] timeParts = parts[1].split(" /to ", 2);
+        if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
+            throw new LukasException(" You missed the start or end time of the event!");
+        }
+        addTask(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
     }
 
     private static void handleDeadline(String input) throws LukasException {
         if (!input.contains(" /by ")) {
             throw new LukasException(" Using deadline command must be followed with a /by time. Use: deadline  <task> /by <day>");
-        } else {
-            String[] parts = input.substring(9).split(" /by ", 2);
-            if (parts[0].trim().isEmpty()) {
-                throw new LukasException(" There must be a task when using deadline command. Try entering some task when using deadline");
-            } else {
-                addTask(new Deadline(parts[0].trim(), parts[1].trim()));
-            }
         }
+
+        String[] parts = input.split(" /by ", 2);
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+
+        if (description.isEmpty()) {
+            throw new LukasException(" There must be a task when using deadline command. Try entering some task when using deadline");
+        }
+        addTask(new Deadline(description, by));
     }
 
     private static void handleTodo(String input) throws LukasException {
-        String description = input.replaceFirst("todo", "").trim();
-        if (description.isEmpty()) {
+        if (input.isEmpty()) {
             throw new LukasException(" todo command cannot be empty. Please add a task after todo");
-        } else {
-            addTask(new ToDo(description));
         }
+        addTask(new ToDo(input));
     }
 
     private static void addTask(Task task) {
@@ -103,31 +100,41 @@ public class Lukas {
         Ui.showAdded(task, listCount);
     }
 
-    private static void handleMark(String input) throws LukasException {
-        try {
-            boolean isMark = input.startsWith("mark");
-            String[] parts = input.split(" ");
-            if (parts.length < 2) {
-                throw new LukasException(" Which task to mark? Try: mark (number)");
-            } else {
-                int idx = Integer.parseInt(parts[1]) - 1;
-                if (idx >= 0 && idx < listCount) {
-                    if (isMark) {
-                        list[idx].markAsDone();
-                        System.out.println("    Good Job on completing the task! Task is now marked as done:");
-                    } else {
-                        list[idx].unmarkAsDone();
-                        System.out.println("    Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
-                    }
-
-                    Task var10001 = list[idx];
-                    System.out.println("    " + var10001);
-                } else {
-                    throw new LukasException(" That task number does not exist. You have " + listCount + " tasks");
-                }
-            }
-        } catch (NumberFormatException var4) {
-            throw new LukasException(" Please use a number to represent the task. For example: mark 1");
+    private static void handleMark(String command, String input) throws LukasException {
+        if (input.isEmpty()) {
+            throw new LukasException(" Which task to " + command + "? Try: " + command + " (number)");
         }
+
+        try {
+            int idx = Integer.parseInt(input) - 1;
+
+            //check bounds early
+            if (idx < 0 || idx >= listCount) {
+                throw new LukasException(" That task number does not exist. You have " + listCount + " tasks");
+            }
+
+            if (command.equals("mark")) {
+                list[idx].markAsDone();
+                System.out.println(getSpaces() + "Good Job on completing the task! Task is now marked as done:");
+            } else {
+                list[idx].unmarkAsDone();
+                System.out.println(getSpaces() + "Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
+            }
+
+            System.out.println(getSpaces() + list[idx]);
+        } catch (NumberFormatException error) {
+            throw new LukasException(" Please use a number to represent the task. For example: " + command + "1");
+        }
+    }
+
+    private static String getSpaces() {
+        return "    ";
+    }
+
+    private static String getArguments(String[] inputParts) {
+        if (inputParts.length < 2) {
+            return "";
+        }
+        return inputParts[1].trim();
     }
 }
