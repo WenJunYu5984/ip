@@ -85,7 +85,7 @@ public class Lukas {
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             throw new LukasException(" Format error! Use: event <task> /from <start> and /to <finish>");
         }
-        String[] parts = input.substring(6).split(" /from ", 2);
+        String[] parts = input.split(" /from ", 2);
         String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new LukasException(" There must be a task when using event command. Try entering some task after typing event");
@@ -99,7 +99,7 @@ public class Lukas {
 
     private static void handleDeadline(String input) throws LukasException {
         if (!input.contains(" /by ")) {
-            throw new LukasException(" Using deadline command must be followed with a /by time. Use: deadline  <task> /by <day>");
+            throw new LukasException(" Using deadline command must be followed with a /by time. Use: deadline <task> /by <day>");
         }
 
         String[] parts = input.split(" /by ", 2);
