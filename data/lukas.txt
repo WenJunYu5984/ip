@@ -1,2 +1,3 @@
-T | 0 | eat cake
 D | 0 | have fun | 2018-01-01T12:00
+T | 1 | have fun
+E | 0 | buy dinner | 2026-02-22T18:00 | 2026-02-23T19:00
