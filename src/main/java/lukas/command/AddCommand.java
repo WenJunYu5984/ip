@@ -8,6 +8,10 @@ import lukas.storage.Storage;
 import lukas.task.*;
 import lukas.ui.Ui;
 
+/**
+ * Handles the creation and addition of new tasks (Todo, Deadline, Event)
+ * to the task list.
+ */
 public class AddCommand extends Command {
     public static final String TODO = "todo";
     public static final String DEADLINE = "deadline";

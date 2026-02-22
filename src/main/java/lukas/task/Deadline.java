@@ -3,6 +3,10 @@ package lukas.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task that must be completed by a specific date and time.
+ * Includes a LocalDateTime object to store and format the deadline.
+ */
 public class Deadline extends Task {
     protected LocalDateTime by;
 

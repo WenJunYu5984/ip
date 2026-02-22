@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles all file-related operations for the chatbot.
+ * Manages the loading of task data from the hard disk and saving current
+ * tasks back to a persistent text file.
+ */
 public class Storage {
     private final String filePath;
 

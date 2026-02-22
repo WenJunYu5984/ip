@@ -6,6 +6,11 @@ import lukas.task.Task;
 import lukas.task.TaskList;
 import lukas.ui.Ui;
 
+/**
+ * Mark a task as done using mark,
+ * or unmark a task as undone using unmark.
+ * All marked tasks have a cross beside the task.
+ */
 public class MarkCommand extends Command {
     private final String arguments;
     private final String commandWord;
@@ -42,9 +47,5 @@ public class MarkCommand extends Command {
             throw new LukasException(" Please use a number to represent the task. For example: " + commandWord + " 1");
         }
         storage.saveTasks(tasks.getAllTasks()); // Save state change to disk
-    }
-
-    private static String getSpaces() {
-        return "    ";
     }
 }

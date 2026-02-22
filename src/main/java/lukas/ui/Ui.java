@@ -4,6 +4,11 @@ import lukas.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the user interface and text output for the application.
+ * Contains methods to display welcome/goodbye messages
+ * and formatted task lists to the terminal.
+ */
 public class Ui {
     private final String LINE = getSpaces() + "_________________________________________";
 

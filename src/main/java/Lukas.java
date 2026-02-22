@@ -9,11 +9,20 @@ import lukas.task.Task;
 import lukas.task.TaskList;
 import lukas.ui.Ui;
 
+/**
+ * Main entry point for the Lukas chatbot.
+ * Handles the initialization of the UI, Storage, and TaskList,
+ * and runs the primary execution loop.
+ */
 public class Lukas {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructs a new Lukas instance.
+     * * @param filePath The path to the file where tasks are saved and loaded.
+     */
     public Lukas(String filePath){
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -30,6 +39,9 @@ public class Lukas {
         new Lukas("./data/lukas.txt").run(); // Added storage field
     }
 
+    /**
+     * Starts the chatbot's main loop, processing user input until an exit command is issued.
+     */
     public void run() {
         ui.showWelcome();
         Scanner message = new Scanner(System.in);
