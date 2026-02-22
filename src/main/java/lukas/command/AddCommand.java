@@ -1,5 +1,8 @@
 package lukas.command;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import lukas.LukasException;
 import lukas.storage.Storage;
 import lukas.task.*;
@@ -20,6 +23,7 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LukasException {
         Task newTask;
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
         switch (taskType) {
         case TODO:
@@ -41,7 +45,12 @@ public class AddCommand extends Command {
             if (deadlineParts.length < 2 || deadlineParts[1].trim().isEmpty()) {
                 throw new LukasException(" You missed the deadline time!");
             }
-            newTask = new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim());
+            try {
+                LocalDateTime deadlineTime = LocalDateTime.parse(deadlineParts[1].trim(), inputFormatter);
+                newTask = new Deadline(deadlineParts[0].trim(), deadlineTime);
+            } catch (java.time.format.DateTimeParseException e) {
+                throw new LukasException(" Invalid date format! Use: yyyy-mm-dd HHmm (e.g., 2019-12-02 1800)");
+            }
             break;
 
         case EVENT:
@@ -57,7 +66,18 @@ public class AddCommand extends Command {
             if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
                 throw new LukasException(" You missed the start or end time of the event!");
             }
-            newTask = new Event(eventDesc, timeParts[0].trim(), timeParts[1].trim());
+            try {
+                LocalDateTime fromTime = LocalDateTime.parse(timeParts[0].trim(), inputFormatter);
+                LocalDateTime toTime = LocalDateTime.parse(timeParts[1].trim(), inputFormatter);
+
+                if (toTime.isBefore(fromTime)) {
+                    throw new LukasException(" The end time cannot be before the start time!");
+                }
+
+                newTask = new Event(eventDesc, fromTime, toTime);
+            } catch (java.time.format.DateTimeParseException e) {
+                throw new LukasException(" Invalid date format! Use: yyyy-mm-dd HHmm (e.g., 2026-02-22 1800)");
+            }
             break;
 
         default:
