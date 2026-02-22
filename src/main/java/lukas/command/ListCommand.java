@@ -8,9 +8,10 @@ import lukas.ui.Ui;
 public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LukasException {
-        if (tasks.getSize() == 0) {
+        if (tasks.isEmpty()){
             throw new LukasException(" Your list is empty! Add something first.");
-        }
+        } else {
         ui.showList(tasks.getAllTasks());
+        }
     }
 }

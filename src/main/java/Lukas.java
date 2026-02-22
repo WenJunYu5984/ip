@@ -26,7 +26,7 @@ public class Lukas {
         if(loadedTasks == null){
             this.tasks = new TaskList();
         } else {
-            this.tasks = new TaskList(storage.load());
+            this.tasks = new TaskList(loadedTasks);
         }
     }
 
