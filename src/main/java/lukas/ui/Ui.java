@@ -5,31 +5,31 @@ import lukas.task.Task;
 import java.util.ArrayList;
 
 public class Ui {
-    private static final String LINE = getSpaces() + "_________________________________________";
+    private final String LINE = getSpaces() + "_________________________________________";
 
-    public static void showLine() {
+    public void showLine() {
         System.out.println(LINE);
     }
 
-    public static void showWelcome() {
+    public void showWelcome() {
         showLine();
         System.out.println(getSpaces() + "Hello I'm Lukas");
         System.out.println(getSpaces()+ "What can I do for you?");
         showLine();
     }
 
-    public static void showGoodbye() {
+    public void showGoodbye() {
         System.out.println(getSpaces() + "Bye! See you later, alligator!");
         showLine();
     }
 
-    public static void showAdded(Task task, int count) {
+    public void showAdded(Task task, int count) {
         System.out.println(getSpaces() + "Got it. I've added this task:");
         System.out.println(getSpaces() + task);
         System.out.println(getSpaces() + "Now you have " + count + " tasks in the list.");
     }
 
-    public static void showList(ArrayList<Task> tasks) {
+    public void showList(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println(getSpaces() + "Your list is currently empty!");
             return;
@@ -41,7 +41,7 @@ public class Ui {
         }
     }
 
-    private static String getSpaces() {
+    private String getSpaces() {
         return "    ";
     }
 }
