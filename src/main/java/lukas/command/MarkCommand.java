@@ -33,13 +33,11 @@ public class MarkCommand extends Command {
             Task t = tasks.getTask(idx);
             if (isMark) {
                 t.markAsDone();
-                System.out.println(getSpaces() + "Good Job on completing the task! Task is now marked as done:");
             } else {
                 t.unmarkAsDone();
-                System.out.println(getSpaces() + "Oh no! Looks like you have 1 more task to do! This task is now marked as not done yet:");
             }
 
-            System.out.println(getSpaces() + t);
+            ui.showMarkStatus(t, isMark);
         } catch (NumberFormatException error) {
             throw new LukasException(" Please use a number to represent the task. For example: " + commandWord + " 1");
         }

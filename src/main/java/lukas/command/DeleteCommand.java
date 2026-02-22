@@ -30,10 +30,7 @@ public class DeleteCommand extends Command {
             //sync to hard drive
             storage.saveTasks(tasks.getAllTasks());
 
-            ui.showLine();
-            System.out.println("    Noted. I've removed this task:");
-            System.out.println("      " + removedTask);
-            System.out.println("    Now you have " + tasks.getSize() + " tasks in the list.");
+            ui.showDeleted(removedTask, tasks.getSize());
         } catch (NumberFormatException error) {
             throw new LukasException(" Please use a number to delete.");
         }
