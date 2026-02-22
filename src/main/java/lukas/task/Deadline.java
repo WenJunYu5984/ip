@@ -1,16 +1,20 @@
 package lukas.task;
 
-public class Deadline extends Task {
-    protected String by;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String by) {
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+        return "[D]" + super.toString() + " (by: " + by.format(displayFormatter) + ")";
     }
     @Override
     public String toFileFormat() {
@@ -18,6 +22,6 @@ public class Deadline extends Task {
         if(isDone){
             statusAsNumber = 1;
         }
-        return "D | " + statusAsNumber + " | " + description + " | " + by;
+        return String.format("D | %d | %s | %s", statusAsNumber, description, by.toString());
     }
 }

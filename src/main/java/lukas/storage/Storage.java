@@ -5,6 +5,7 @@ import lukas.task.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -70,10 +71,10 @@ public class Storage {
             t = new ToDo(desc);
             break;
         case "D":
-            t = new Deadline(desc, p[3]);
+            t = new Deadline(desc, LocalDateTime.parse(p[3]));
             break;
         case "E":
-            t = new Event(desc, p[3], p[4]);
+            t = new Event(desc, LocalDateTime.parse(p[3]), LocalDateTime.parse(p[4]));
             break;
         default:
             throw new Exception("Invalid Task Type");
