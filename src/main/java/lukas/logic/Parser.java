@@ -13,6 +13,7 @@ public class Parser {
     public static final String UNMARK = "unmark";
     public static final String LIST = "list";
     public static final String BYE = "bye";
+    public static final String FIND = "find";
 
     public static Command parse(String input) throws LukasException {
         String[] parts = input.split(" ", 2);
@@ -36,6 +37,8 @@ public class Parser {
             return new ListCommand();
         case BYE:
             return new ExitCommand();
+        case FIND:
+            return new FindCommand(args);
         default:
             throw new LukasException(" I'm sorry, but I don't know what you mean :( Try todo, deadline, or event instead.");
         }
