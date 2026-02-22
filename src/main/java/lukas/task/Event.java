@@ -3,6 +3,10 @@ package lukas.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task that occurs during a specific time frame.
+ * Stores both a start (from) and an end (to) LocalDateTime.
+ */
 public class Event extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;

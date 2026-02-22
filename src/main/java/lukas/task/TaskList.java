@@ -2,6 +2,11 @@ package lukas.task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the collection of tasks in the chatbot.
+ * Provides a wrapper around an ArrayList to manage tasks, including adding,
+ * deleting, and retrieving tasks with bounds checking.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 

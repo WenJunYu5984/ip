@@ -6,6 +6,10 @@ import lukas.task.TaskList;
 import lukas.ui.Ui;
 import lukas.task.Task;
 
+/**
+ * Deletes a task at corresponding index on the list.
+ * Updates new list without removed task.
+ */
 public class DeleteCommand extends Command {
     private final String arguments;
 

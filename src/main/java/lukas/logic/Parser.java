@@ -3,6 +3,11 @@ package lukas.logic;
 import lukas.LukasException;
 import lukas.command.*;
 
+/**
+ * Handles the interpretation of user input strings.
+ * Responsible for breaking down raw input into a command word and its arguments,
+ * then returning the appropriate Command object.
+ */
 public class Parser {
 
     public static final String DELETE = "delete";
@@ -40,7 +45,7 @@ public class Parser {
         case FIND:
             return new FindCommand(args);
         default:
-            throw new LukasException(" I'm sorry, but I don't know what you mean :( Try todo, deadline, or event instead.");
+            throw new LukasException(" I'm sorry, but I don't know what you mean :( Try list, mark/unmark, todo, deadline, event or delete instead.");
         }
     }
 }

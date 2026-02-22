@@ -1,5 +1,9 @@
 package lukas.task;
 
+/**
+ * Adds a task to the list.
+ * No specific timing required.
+ */
 public class ToDo extends Task {
     public ToDo(String description) {
         super(description);

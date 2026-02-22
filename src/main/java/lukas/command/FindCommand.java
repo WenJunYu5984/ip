@@ -8,6 +8,10 @@ import lukas.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Performs a keyword search across the task list and displays
+ * matching tasks to the user.
+ */
 public class FindCommand extends Command {
     private final String keyword;
 

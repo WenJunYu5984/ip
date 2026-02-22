@@ -1,5 +1,10 @@
 package lukas.task;
 
+/**
+ * An abstract representation of a task.
+ * Contains common properties such as description and completion status,
+ * as well as abstract methods for file storage.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
