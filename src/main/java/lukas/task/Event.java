@@ -22,11 +22,13 @@ public class Event extends Task {
         DateTimeFormatter displayFormat = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
         return "[E]" + super.toString() + " (from: " + from.format(displayFormat) + " to: " + to.format(displayFormat) + ")";
     }
+
     @Override
     public String toFileFormat() {
         int statusAsNumber = 0;
-        if(isDone){
+        if (isDone) {
             statusAsNumber = 1;
         }
-        return String.format("E | %d | %s | %s | %s", statusAsNumber, description, from, to);    }
+        return String.format("E | %d | %s | %s | %s", statusAsNumber, description, from, to);
+    }
 }
