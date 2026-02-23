@@ -12,10 +12,10 @@ import lukas.ui.Ui;
 public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LukasException {
-        if (tasks.isEmpty()){
+        if (tasks.isEmpty()) {
             throw new LukasException(" Your list is empty! Add something first.");
         } else {
-        ui.showList(tasks.getAllTasks());
+            ui.showList(tasks.getAllTasks());
         }
     }
 }

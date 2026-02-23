@@ -23,12 +23,12 @@ public class Lukas {
      * Constructs a new Lukas instance.
      * * @param filePath The path to the file where tasks are saved and loaded.
      */
-    public Lukas(String filePath){
+    public Lukas(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
 
         ArrayList<Task> loadedTasks = storage.load();
-        if(loadedTasks == null){
+        if (loadedTasks == null) {
             this.tasks = new TaskList();
         } else {
             this.tasks = new TaskList(loadedTasks);
@@ -62,7 +62,8 @@ public class Lukas {
         }
         message.close();
     }
-   private static String getSpaces() {
+
+    private static String getSpaces() {
         return "    ";
     }
 }

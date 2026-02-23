@@ -1,26 +1,41 @@
-# Duke project template
+# Lukas Chatbot User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+The following instructions will help guide you through the basic functions of the Lukas Chatbot.
 
-## Setting up in Intellij
+## List of Commands
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+1. **list**: Prints out all task added to current list.  
+   Format: `list`
+2. **todo**: Adds a task to the list  
+   _Feature_: Requires a task only. No time limit required.  
+   Format: `todo <task>`
+3. **deadline**: Adds a task to the list that should be completed by a certain date.  
+   _Feature_: Requires a task and a time.  
+   Format: `deadline <task> /by <time>`
+    1. time should follow ***yyyy-mm-dd HHmm*** `e.g. 2019-12-02 1800`
+4. **event**: Adds a task to the list that should be completed within a certain duration  
+   _Feature_: Requires a task, followed by 2 timings.  
+   Format: `event <task> /from <start> /to <end>`
+    1. ***start*** and ***end*** should follow ***yyyy-mm-dd HHmm*** `e.g. 2019-12-02 1800`
+5. **mark/unmark**: Marks/Unmarks a task on the list. Used to denote what task are completed and not completed.  
+   _Feature_: Uses an integer number to denote index.  
+   Format: `mark/unmark <index>`
+    1. index should be a positive number
+    2. index starts from 1
+    3. index cannot be larger than current number of tasks in list
+6. **delete**: Deletes a task from the list.  
+   _Feature_: Uses an integer number to denote index.  
+   Format: `delete <index>`
+    1. index should be a positive number
+    2. index starts from 1
+    3. index cannot be larger than current number of tasks in list
+7. **find**: Returns list of tasks that matches keywords used.  
+   _Feature_: Uses a keyword to find matching tasks.  
+   Format: `find <keyword>`
+8. **bye**: Exits the program.  
+   Format: `bye`
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+### Notes ###
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+Upon exiting the program, the list of task created will be saved in .txt format within the `data` file. 
+

@@ -35,9 +35,9 @@ public class Parser {
         case EVENT:
             return new AddCommand("event", args);
         case MARK:
-            return new MarkCommand(args,"mark", true);
+            return new MarkCommand(args, "mark", true);
         case UNMARK:
-            return new MarkCommand(args,"unmark",false);
+            return new MarkCommand(args, "unmark", false);
         case LIST:
             return new ListCommand();
         case BYE:

@@ -19,7 +19,7 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.println(getSpaces() + "Hello I'm Lukas");
-        System.out.println(getSpaces()+ "What can I do for you?");
+        System.out.println(getSpaces() + "What can I do for you?");
         showLine();
     }
 
